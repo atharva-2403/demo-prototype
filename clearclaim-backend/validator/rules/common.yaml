@@ -1,0 +1,24 @@
+rules:
+  - rule_id: "COMMON_NPI_LUHN"
+    description: "NPI must pass the Luhn algorithm"
+    applies_to_types: ["837P", "837I", "835", "834"]
+    check_type: "luhn"
+    severity: "error"
+    error_code: "INVALID_NPI"
+    plain_english: "The NPI '{raw_value}' is invalid because it failed the checksum algorithm. It must be a 10-digit number."
+    segment_id: "NM1"
+    element_position: 9
+    condition:
+      when_element: 8
+      when_value: "XX"
+
+  - rule_id: "COMMON_DATE_FORMAT"
+    description: "Dates must be CCYYMMDD"
+    applies_to_types: ["837P", "837I", "835", "834"]
+    check_type: "regex"
+    severity: "error"
+    error_code: "INVALID_DATE_FORMAT"
+    plain_english: "The date '{raw_value}' is not in the correct CCYYMMDD format."
+    segment_id: "DTP"
+    element_position: 3
+    pattern: '^(19|20)\d{6}(?:-(19|20)\d{6})?$'

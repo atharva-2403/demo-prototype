@@ -1,0 +1,55 @@
+loop_id: "ROOT"
+name: "Transaction Root"
+opening_segment: "ST"
+opening_qualifier: null
+children:
+  - loop_id: "1000A"
+    name: "Submitter Name"
+    opening_segment: "NM1"
+    opening_qualifier: {"element": 1, "value": "41"}
+    children: []
+  - loop_id: "1000B"
+    name: "Receiver Name"
+    opening_segment: "NM1"
+    opening_qualifier: {"element": 1, "value": "40"}
+    children: []
+  - loop_id: "2000A"
+    name: "Billing Provider Hierarchical Level"
+    opening_segment: "HL"
+    opening_qualifier: {"element": 3, "value": "20"}
+    children:
+      - loop_id: "2010AA"
+        name: "Billing Provider Name"
+        opening_segment: "NM1"
+        opening_qualifier: {"element": 1, "value": "85"}
+        children: []
+      - loop_id: "2010AB"
+        name: "Pay-to Address"
+        opening_segment: "NM1"
+        opening_qualifier: {"element": 1, "value": "87"}
+        children: []
+      - loop_id: "2000B"
+        name: "Subscriber Hierarchical Level"
+        opening_segment: "HL"
+        opening_qualifier: {"element": 3, "value": "22"}
+        children:
+          - loop_id: "2010BA"
+            name: "Subscriber Name"
+            opening_segment: "NM1"
+            opening_qualifier: {"element": 1, "value": "IL"}
+            children: []
+          - loop_id: "2300"
+            name: "Claim Information"
+            opening_segment: "CLM"
+            opening_qualifier: null
+            children:
+              - loop_id: "2310B"
+                name: "Rendering Provider Name"
+                opening_segment: "NM1"
+                opening_qualifier: {"element": 1, "value": "82"}
+                children: []
+              - loop_id: "2400"
+                name: "Service Line"
+                opening_segment: "LX"
+                opening_qualifier: null
+                children: []

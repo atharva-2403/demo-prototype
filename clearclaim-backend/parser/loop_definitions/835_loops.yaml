@@ -1,0 +1,30 @@
+loop_id: "ROOT"
+name: "Transaction Root"
+opening_segment: "ST"
+opening_qualifier: null
+children:
+  - loop_id: "1000A"
+    name: "Payer Name"
+    opening_segment: "NM1"
+    opening_qualifier: {"element": 1, "value": "PR"}
+    children: []
+  - loop_id: "1000B"
+    name: "Payee Name"
+    opening_segment: "NM1"
+    opening_qualifier: {"element": 1, "value": "PE"}
+    children: []
+  - loop_id: "2000"
+    name: "Claim Payment"
+    opening_segment: "LX"
+    opening_qualifier: null
+    children:
+      - loop_id: "2100"
+        name: "Claim Payment Information"
+        opening_segment: "CLP"
+        opening_qualifier: null
+        children:
+          - loop_id: "2110"
+            name: "Service Payment Information"
+            opening_segment: "SVC"
+            opening_qualifier: null
+            children: []

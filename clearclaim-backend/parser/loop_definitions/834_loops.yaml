@@ -1,0 +1,45 @@
+loop_id: "ROOT"
+name: "Transaction Root"
+opening_segment: "ST"
+opening_qualifier: null
+children:
+  - loop_id: "1000A"
+    name: "Sponsor Name"
+    opening_segment: "NM1"
+    opening_qualifier: {"element": 1, "value": "P5"}
+    children: []
+  - loop_id: "1000B"
+    name: "Payer Name"
+    opening_segment: "NM1"
+    opening_qualifier: {"element": 1, "value": "IN"}
+    children: []
+  - loop_id: "2000"
+    name: "Member Level Detail"
+    opening_segment: "INS"
+    opening_qualifier: null
+    children:
+      - loop_id: "2100A"
+        name: "Member Name"
+        opening_segment: "NM1"
+        opening_qualifier: {"element": 1, "value": "IL"}
+        children: []
+      - loop_id: "2200"
+        name: "Disability Information"
+        opening_segment: "DSB"
+        opening_qualifier: null
+        children: []
+      - loop_id: "2300"
+        name: "Health Coverage"
+        opening_segment: "HD"
+        opening_qualifier: null
+        children:
+          - loop_id: "2310"
+            name: "Additional Member Health Coverage"
+            opening_segment: "LX"
+            opening_qualifier: null
+            children: []
+          - loop_id: "2320"
+            name: "Coordination of Benefits"
+            opening_segment: "COB"
+            opening_qualifier: null
+            children: []

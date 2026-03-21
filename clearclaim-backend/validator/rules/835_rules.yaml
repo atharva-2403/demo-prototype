@@ -1,0 +1,11 @@
+rules:
+  - rule_id: "835_INVALID_CAS_GROUP"
+    description: "CAS01 must be a valid group code"
+    applies_to_types: ["835"]
+    check_type: "enum"
+    severity: "error"
+    error_code: "INVALID_CAS_GROUP_CODE"
+    plain_english: "The CAS group code '{raw_value}' is invalid. Must be PR, CO, OA, or PI."
+    segment_id: "CAS"
+    element_position: 1
+    valid_values: ["PR", "CO", "OA", "PI"]

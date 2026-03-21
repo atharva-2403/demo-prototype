@@ -1,0 +1,14 @@
+rules:
+  - rule_id: "837P_CLM_AMOUNT_MISMATCH"
+    description: "CLM02 must equal sum of SV1-02"
+    applies_to_types: ["837P"]
+    check_type: "cross_segment_sum"
+    severity: "error"
+    error_code: "CLM_AMOUNT_MISMATCH"
+    plain_english: "The total billed amount '{raw_value}' does not match the sum of service line amounts ({sum_value})."
+    loop_id: "2300"
+    source_segment: "CLM"
+    source_element: 2
+    sum_segment: "SV1"
+    sum_element: 2
+    sum_loop: "2400"

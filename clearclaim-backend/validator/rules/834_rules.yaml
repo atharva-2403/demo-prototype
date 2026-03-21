@@ -1,0 +1,13 @@
+rules:
+  - rule_id: "834_DUPLICATE_MEMBER_ID"
+    description: "Duplicate REF*0F values in the same 834 file are not allowed"
+    applies_to_types: ["834"]
+    check_type: "cross_record_unique"
+    severity: "error"
+    error_code: "DUPLICATE_MEMBER_ID"
+    plain_english: "The Member ID '{raw_value}' appears multiple times in this 834 file."
+    segment_id: "REF"
+    element_position: 2
+    condition:
+      when_element: 1
+      when_value: "0F"

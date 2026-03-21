@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  backend:
+    build: ./clearclaim-backend
+    ports: ["8000:8000"]
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+    volumes:
+      - ./clearclaim-backend:/app
+
+  frontend:
+    build: ./clearclaim-frontend
+    ports: ["3000:3000"]
+    environment:
+      - VITE_API_URL=http://localhost:8000/api
+    depends_on:
+      - backend
