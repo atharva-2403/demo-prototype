@@ -8,6 +8,7 @@
 - **Production Environment Injection:** Refactored `src/api/client.ts` to use `import.meta.env.VITE_API_URL`. This allows Vercel to inject the backend URL at build time without hardcoding.
 - **TypeScript Type Safety:** Created `src/vite-env.d.ts` to define the `ImportMetaEnv` interface, preventing TypeScript from stripping the `VITE_API_URL` variable during the build.
 - **Build Script Fix:** Confirmed the `build` script in `package.json` is `vite build`, bypassing the strict `tsc` checks that could block deployment on Vercel due to non-runtime type imports.
+- **LLM Persona Refinement:** Updated the AI system prompt to transition from a technical assistant to an **expert Medical Billing and EDI Consultant**. The LLM now explains business impacts in plain English for administrative staff and provides clear 'Next Step' instructions instead of repeating technical EDI segment codes.
 - **Security & Integrity:** Maintained a clean Git history and confirmed no secrets are staged.
 
 ---

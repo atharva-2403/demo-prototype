@@ -13,6 +13,7 @@
    - CORS allowed for all origins.
    - **Production Environment Variables:** Frontend now uses `import.meta.env.VITE_API_URL` with a local fallback, secured by TypeScript interface definitions in `vite-env.d.ts`.
    - **Vercel Build Optimization:** `package.json` build script simplified to `vite build` to ensure smooth deployment.
+5. **AI Persona Refinement:** Transitioned the AI assistant to an **expert Medical Billing and EDI Consultant** persona. The model now prioritizes plain-English business impact explanations and actionable 'Next Steps' over technical segment repetition.
 
 ### Current State
 The repository is synchronized with GitHub and ready for live deployment.

@@ -639,12 +639,13 @@ else:
 ```
 
 ### System Prompt Design
-The system prompt must include these three elements:
-  1. Role definition ("You are ClearClaim AI, an expert EDI assistant")
-  2. Data source constraint ("Only answer using the Markdown document provided")
-  3. Citation rule ("Always cite Error N from Section 3 when referencing errors")
+The system prompt must include these elements:
+  1. Role definition ("You are an expert Medical Billing and EDI Consultant")
+  2. Business goal ("Explain complex EDI transaction errors in plain, professional English for administrative staff")
+  3. Analysis rules (Avoid repeating segment codes, explain business impact, provide 'Next Step')
+  4. Data source constraint ("Only answer using the Markdown document provided")
+  5. Citation rule ("Always cite Error N from Section 3 when referencing errors")
 Never ask the LLM to recall EDI rules from memory — it must reason from the file.
-
 ## MUST_NOT
 - MUST_NOT hardcode the API key — always use os.getenv("ANTHROPIC_API_KEY").
 - MUST_NOT pass raw JSON as context — always use the Markdown from SKILL-MARKDOWN-CTX.
