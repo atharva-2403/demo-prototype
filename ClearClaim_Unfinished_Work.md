@@ -25,6 +25,12 @@
   - Added a dropdown picker to `AIChatPanel.tsx` in the frontend allowing dynamic per-request AI switching.
   - Successfully verified robust logic testing in `tests/test_llm_provider.py` resulting in **20/20 passing tests**.
   - Executed End-to-End Demo Rehearsal specifically mapping the `gemini-2.5-pro` model configured with a live `GOOGLE_API_KEY`, successfully identifying network routing logic to Google's Generative AI servers.
+- **Production & Deployment Readiness**:
+  - Performed security audit on `.gitignore` in both frontend and backend to secure `.env` and `__pycache__`.
+  - Created `.env.example` template with dummy keys for open-source safety.
+  - Purged git cache to ensure no active `.env` files were tracked.
+  - Constructed `render.yaml` defining IaC parameters for FastAPI backend deployment on Render.
+  - Successfully committed all codebase preparations locally to the `main` branch.
 
 ---
 

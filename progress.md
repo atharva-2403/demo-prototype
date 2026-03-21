@@ -12,7 +12,7 @@
 7. **Phase 6: AI Layer** - Implemented context builder applying a strict 5-section markdown rule to ensure NO raw JSON is forwarded to the Anthropic LLM.
 8. **Phase 8: Export System** - Included round-trip script and PDF formatting functionality.
 9. **Phase 10: Testing and QA** - Wrote comprehensive test coverage and verified all 12 backend test cases are passing (Parser, Validator, Context Builder, and full API). Performed Task 10.4 E2E AI evaluation.
-10. **Phase 11: Deployment Configuration** - Created both `Dockerfile`s and standard `docker-compose.yml`.
+10. **Phase 11: Deployment Configuration** - Created both `Dockerfile`s and standard `docker-compose.yml`. Configured `render.yaml` for Render deployment, sanitized `.gitignore` files, built `.env.example`, and committed final project version locally.
 11. **Bonus Feature: Real NPI Validation** - Added dynamic check against `npiregistry.cms.hhs.gov`.
 12. **Bonus Feature: Batch Processing** - Implemented `/api/batch-upload` ZIP extraction, validated with `test_batch.py`.
 13. **Bonus Feature: 835-to-837 Reconciliation** - Added discrepancy computation engine logic for validating processed vs remitted amounts.
