@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { ParsedEDI, ValidationResult } from '../types/edi';
 
-const API_BASE = 'http://localhost:8000/api';
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
 
 export const uploadFile = async (file: File): Promise<ParsedEDI> => {
   const formData = new FormData();
