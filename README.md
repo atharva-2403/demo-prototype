@@ -24,7 +24,7 @@ Membership Reporting: An automated 834 Delta Engine identifies additions, termin
 
 Production Access
 
-Frontend: Hosted on Netlify.
+Frontend: Hosted on Vercel
 
 Backend: Hosted on Render at the /api root endpoint.
 
