@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+pyyaml
+python-stdnum
+requests
+reportlab
+anthropic
+openai
+google-generativeai
+python-multipart
+aiofiles
+httpx
+python-jose
