@@ -1,10 +1,13 @@
 # ClearClaim — Unfinished Work Tracker
-## Last Updated: 2026-03-21
-## Session Number: 3
+## Last Updated: 2026-03-22
+## Session Number: 4
 
 ---
 
 ## Execution Summary
+- **Mission Control UI:** Implemented a high-fidelity 'Mission Control' upload interface with a mode selector (Standard, Delta, Reconcile) and dynamic multi-dropzone components.
+- **Pre-flight Validation:** Added a `/api/preflight` backend endpoint and integrated it into the UI to show 'File Detected' badges (EDI type and segment count) upon file drop.
+- **Frontend Logic & Routing:** Updated `client.ts` and `ValidatorPage.tsx` to route and render the appropriate components and API calls based on the selected mode. Added a 'Validation Spinner' for improved perceived performance.
 - **Production Environment Injection:** Refactored `src/api/client.ts` to use `import.meta.env.VITE_API_URL`. This allows Vercel to inject the backend URL at build time without hardcoding.
 - **TypeScript Type Safety:** Created `src/vite-env.d.ts` to define the `ImportMetaEnv` interface, preventing TypeScript from stripping the `VITE_API_URL` variable during the build.
 - **Build Script Fix:** Confirmed the `build` script in `package.json` is `vite build`, bypassing the strict `tsc` checks that could block deployment on Vercel due to non-runtime type imports.
@@ -14,6 +17,7 @@
 ---
 
 ## Status
+- [x] Mission Control UI & Pre-flight Validation
 - [x] Multi-LLM Support
 - [x] Real NPI Validation
 - [x] Batch Processing
