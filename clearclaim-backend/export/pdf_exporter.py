@@ -30,17 +30,19 @@ def generate_pdf(parsed, validation) -> bytes:
     
     if validation.errors:
         err_data = [["Error Code", "Location", "Value", "Message"]]
+        normal_style = styles['Normal']
         for e in validation.errors[:20]:
             err_data.append([
                 e.error_code, 
                 f"{e.segment_id}:{e.element_position}", 
                 str(e.raw_value)[:15], 
-                e.plain_english[:40] + "..."
+                Paragraph(e.plain_english, normal_style)
             ])
-        t2 = Table(err_data)
+        t2 = Table(err_data, colWidths=[80, 60, 80, 250])
         t2.setStyle(TableStyle([
             ('BACKGROUND', (0,0), (-1,0), '#a5a6d5'),
-            ('GRID', (0,0), (-1,-1), 1, '#000000')
+            ('GRID', (0,0), (-1,-1), 1, '#000000'),
+            ('VALIGN', (0,0), (-1,-1), 'TOP'),
         ]))
         elements.append(t2)
         

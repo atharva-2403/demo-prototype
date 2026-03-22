@@ -15,7 +15,7 @@
 10. **Deployment Readiness:** 
    - Root `.gitignore` and git history scrubbed of secrets.
    - `render.yaml` for backend deployment.
-   - `requirements.txt` generated.
+   - `requirements.txt` generated and manually updated to include `reportlab`.
    - **Production CORS Hardening:** Restricted origins and enabled `expose_headers` for binary metadata reading.
    - **Production Environment Variables:** Frontend now uses `import.meta.env.VITE_API_URL` with a local fallback, secured by TypeScript interface definitions in `vite-env.d.ts`.
    - **Vercel Build Optimization:** `package.json` build script simplified to `vite build` to ensure smooth deployment.
@@ -25,6 +25,7 @@
 15. **PDF Export & CORS Hardening:** Resolved production 'net::ERR_FAILED' errors by refactoring the frontend `ExportControls.tsx` to use native `fetch` with `response.blob()` for binary integrity. Hardened `main.py` CORS configuration to strictly include production origins and explicitly **exposed** critical headers (`Content-Disposition`, `Content-Length`, `X-Suggested-Filename`) required for cross-origin PDF metadata reading.
 16. **AI Persona Behavioral Correction:** Rebranded the AI as the 'ClearClaim AI Medical Billing Consultant'. Updated `ai/chat.py` with strict negative constraints (forbidding words like "Markdown", "Document", "Section", "Context"). Implemented expert fallbacks allowing the AI to answer general healthcare billing questions instead of requiring a file analysis.
 17. **Backend PDF Export Robustness:** Refactored the export endpoint to use `Response` with direct binary delivery of PDF bytes generated via `reportlab`. Added a try/except block with detailed traceback logging to stderr for easier production debugging on Render. Confirmed `reportlab` dependency in `requirements.txt`.
+18. **PDF Formatting Improvements:** Implemented text wrapping for validation messages using `reportlab.platypus.Paragraph` and established explicit `colWidths` to prevent data truncation in the exported reports.
 
 ### Current State
 The repository is synchronized with GitHub and ready for live deployment.
@@ -35,3 +36,4 @@ The repository is synchronized with GitHub and ready for live deployment.
 - `pytest` suite: 20/20 passing.
 - Demo rehearsal: All X12 formats (837, 835, 834) parsing and validating correctly.
 - Production Fixes: CORS header exposure and PDF binary integrity confirmed.
+- PDF Layout: Multi-line messages and consistent column widths verified.
