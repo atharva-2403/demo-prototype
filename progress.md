@@ -16,14 +16,14 @@
    - Root `.gitignore` and git history scrubbed of secrets.
    - `render.yaml` for backend deployment.
    - `requirements.txt` generated.
-   - CORS allowed for all origins.
+   - CORS allowed for production and development origins.
    - **Production Environment Variables:** Frontend now uses `import.meta.env.VITE_API_URL` with a local fallback, secured by TypeScript interface definitions in `vite-env.d.ts`.
    - **Vercel Build Optimization:** `package.json` build script simplified to `vite build` to ensure smooth deployment.
 12. **Data Privacy & HIPAA Compliance:** Added strict regular expression masking in `context_builder.py` to scrub standard PHI patterns (e.g., SSNs and DOBs) before sending EDI context to LLMs.
 13. **LLM Prompt Injection Defense:** Wrapped EDI markdown context within strict `"""` delimiters and added explicit system prompt instructions in `ai/chat.py` to prevent prompt injection attacks from malicious EDI payloads.
 14. **Security & Integrity Audit:** Performed a comprehensive Application Security audit across 5 domains (Input Validation, Data Privacy/HIPAA, Network Security/CORS, Secrets Management, and Dependency Vulnerabilities). Documented findings and proposed patches in a new `Security_Action_Plan.md`.
-15. **PDF Export Fix (Binary Integrity):** Resolved PDF corruption issues by refactoring the frontend `ExportControls.tsx` to use native `fetch` with `response.blob()`. This ensures binary integrity by bypassing automatic JSON parsing. Implemented a native programmatic download flow with proper memory management (`revokeObjectURL`).
-16. **LLM Persona & Behavioral Update:** Rebranded the AI as the 'ClearClaim AI Medical Billing Consultant'. Updated the system prompt in `ai/chat.py` to strictly hide internal architecture (no mentions of "Markdown" or "Sections"). Implemented intelligent fallbacks to provide a warm introduction and answer general billing questions instead of refusing input when no file is present. Set Google Gemini as the default LLM provider.
+15. **PDF Export & CORS Hardening:** Resolved PDF corruption issues by refactoring the frontend `ExportControls.tsx` to use native `fetch` with `response.blob()`. Hardened `main.py` CORS configuration to strictly include production origins and explicitly `expose_headers` (`Content-Disposition`, `Content-Length`, `X-Suggested-Filename`) required for cross-origin downloads. Updated `routes/export.py` to send `X-Suggested-Filename`.
+16. **AI Behavioral Refinement:** Rewrote the AI System Prompt in `ai/chat.py` to strictly act as the 'ClearClaim AI Medical Billing Consultant'. Enforced negative constraints to forbid internal terminology (Markdown, Document, Section, Context). Implemented a warm fallback for general questions, allowing the AI to answer educational billing queries instead of refusing input. Set Google Gemini as the default LLM provider.
 
 ### Current State
 The repository is synchronized with GitHub and ready for live deployment.

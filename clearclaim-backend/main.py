@@ -5,11 +5,11 @@ from routes import upload, validate, chat, fix, export, batch, reconcile, delta,
 
 app = FastAPI(title="ClearClaim API", version="1.0.0")
 
-# Get allowed origins from environment, fallback to localhost for dev
-ALLOWED_ORIGINS = os.getenv(
-    "ALLOWED_ORIGINS", 
-    "http://localhost:5173,http://localhost:3000,https://demo-prototype-jade.vercel.app"
-).split(",")
+# Strictly defined origins for production and local development
+ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "https://demo-prototype-jade.vercel.app"
+]
 
 app.add_middleware(
     CORSMiddleware,
@@ -17,6 +17,7 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["Content-Type", "Authorization", "Accept"],
+    expose_headers=["Content-Disposition", "Content-Length", "X-Suggested-Filename"],
 )
 
 app.include_router(upload.router, prefix="/api")
