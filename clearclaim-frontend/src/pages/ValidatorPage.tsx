@@ -7,7 +7,6 @@ import AIChatPanel from '../components/AIChatPanel';
 import ExportControls from '../components/ExportControls';
 import RemittanceSummary from '../components/RemittanceSummary';
 import EnrollmentSummary from '../components/EnrollmentSummary';
-import EligibilityCheck from '../components/EligibilityCheck';
 import type { ParsedEDI, ValidationResult } from '../types/edi';
 
 export default function ValidatorPage() {
@@ -30,7 +29,6 @@ export default function ValidatorPage() {
     return (
       <div className="max-w-6xl mx-auto p-4 flex flex-col gap-6 pb-20">
         <FileUpload onUploadSuccess={handleUploadSuccess} />
-        <EligibilityCheck />
       </div>
     );
   }
