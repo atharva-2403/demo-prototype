@@ -5,7 +5,8 @@
 ---
 
 ## Execution Summary
-- **Mission Control UI:** Implemented a high-fidelity 'Mission Control' upload interface with a mode selector (Standard, Delta, Reconcile) and dynamic multi-dropzone components.
+- **Native Drag-and-Drop Implementation:** Replaced `react-dropzone` with native HTML5 drag-and-drop event handlers (`onDragOver`, `onDragLeave`, `onDrop`) using explicit `e.preventDefault()` to prevent the browser from inadvertently opening `.edi` files in a new tab.
+- **Mission Control UI:** Implemented a high-fidelity 'Mission Control' upload interface with a mode selector (Standard, Delta, Reconcile) and dynamic multi-dropzone components, featuring a unified `files` state array to cleanly handle multi-file uploads (e.g. `[file1, file2]`) without overwriting.
 - **Pre-flight Validation:** Added a `/api/preflight` backend endpoint and integrated it into the UI to show 'File Detected' badges (EDI type and segment count) upon file drop.
 - **Frontend Logic & Routing:** Updated `client.ts` and `ValidatorPage.tsx` to route and render the appropriate components and API calls based on the selected mode. Added a 'Validation Spinner' for improved perceived performance.
 - **Production Environment Injection:** Refactored `src/api/client.ts` to use `import.meta.env.VITE_API_URL`. This allows Vercel to inject the backend URL at build time without hardcoding.
