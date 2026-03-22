@@ -6,7 +6,7 @@ export default function AIChatPanel({ parsed, validation }: { parsed: ParsedEDI,
   const [history, setHistory] = useState<any[]>([]);
   const [input, setInput] = useState('');
   const [isThinking, setIsThinking] = useState(false);
-  const [provider, setProvider] = useState('anthropic');
+  const [provider, setProvider] = useState('gemini');
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -28,17 +28,16 @@ export default function AIChatPanel({ parsed, validation }: { parsed: ParsedEDI,
     <div className="bg-white p-4 rounded shadow border border-slate-200 flex flex-col h-[600px]">
       <div className="flex justify-between items-center mb-4 border-b pb-2">
         <h2 className="font-bold text-slate-800">ClearClaim AI Assistant</h2>
-        <select 
-          value={provider} 
+        <select
+          value={provider}
           onChange={(e) => setProvider(e.target.value)}
           className="border border-slate-300 rounded p-1 text-sm bg-slate-50 text-slate-700 outline-none"
         >
+          <option value="gemini">Gemini 2.5 (Google)</option>
           <option value="anthropic">Claude (Anthropic)</option>
           <option value="openai">GPT-4o (OpenAI)</option>
-          <option value="gemini">Gemini 2.5 (Google)</option>
         </select>
-      </div>
-      <div className="flex-1 overflow-y-auto mb-4 space-y-4 pr-2">
+      </div>      <div className="flex-1 overflow-y-auto mb-4 space-y-4 pr-2">
         {history.length === 0 && <p className="text-slate-400 text-sm">Ask me why a claim was rejected, how to fix an error, or to summarize this file.</p>}
         {history.map((msg, i) => (
           <div key={i} className={`p-3 rounded-lg ${msg.role === 'user' ? 'bg-blue-50 ml-8' : 'bg-slate-50 mr-8 border'}`}>
