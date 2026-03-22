@@ -25,7 +25,7 @@
 15. **PDF Export & CORS Hardening:** Resolved production 'net::ERR_FAILED' errors by refactoring the frontend `ExportControls.tsx` to use native `fetch` with `response.blob()` for binary integrity. Hardened `main.py` CORS configuration to strictly include production origins and explicitly **exposed** critical headers (`Content-Disposition`, `Content-Length`, `X-Suggested-Filename`) required for cross-origin PDF metadata reading.
 16. **AI Persona Behavioral Correction:** Rebranded the AI as the 'ClearClaim AI Medical Billing Consultant'. Updated `ai/chat.py` with strict negative constraints (forbidding words like "Markdown", "Document", "Section", "Context"). Implemented expert fallbacks allowing the AI to answer general healthcare billing questions instead of requiring a file analysis.
 17. **Backend PDF Export Robustness:** Refactored the export endpoint to use `Response` with direct binary delivery of PDF bytes generated via `reportlab`. Added a try/except block with detailed traceback logging to stderr for easier production debugging on Render. Confirmed `reportlab` dependency in `requirements.txt`.
-18. **PDF Formatting Improvements:** Implemented text wrapping for validation messages using `reportlab.platypus.Paragraph` and established explicit `colWidths` to prevent data truncation in the exported reports.
+18. **PDF Formatting Improvements:** Implemented text wrapping for validation messages using `reportlab.platypus.Paragraph` and established explicit `colWidths` (`[120, 60, 80, 210]`) to prevent data truncation and text overlap in the 'Error Code' column.
 
 ### Current State
 The repository is synchronized with GitHub and ready for live deployment.

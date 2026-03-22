@@ -38,7 +38,7 @@ def generate_pdf(parsed, validation) -> bytes:
                 str(e.raw_value)[:15], 
                 Paragraph(e.plain_english, normal_style)
             ])
-        t2 = Table(err_data, colWidths=[80, 60, 80, 250])
+        t2 = Table(err_data, colWidths=[120, 60, 80, 210])
         t2.setStyle(TableStyle([
             ('BACKGROUND', (0,0), (-1,0), '#a5a6d5'),
             ('GRID', (0,0), (-1,-1), 1, '#000000'),
