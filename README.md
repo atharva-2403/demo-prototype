@@ -71,11 +71,20 @@ Project Structure
 
 ├── clearclaim-backend/
 │   ├── ai/               # LLM Orchestration & Prompt Engineering
+
 │   ├── parsers/          # Custom X12 State-Machine Logic
+
 │   ├── main.py           # FastAPI Entry & Secure CORS Middleware
+
 │   └── context_builder.py # PHI Masking & Markdown Generation
+
 ├── src/                  # React Frontend
+
 │   ├── components/       # Mission Control & Segment Tree UI
+
 │   ├── api/              # Secure Client with Env Injection
+
 │   └── App.tsx           # Global State & Mode Routing
+
 └── Security_Action_Plan.md # Audit findings and implemented patches
+
