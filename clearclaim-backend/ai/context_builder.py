@@ -1,5 +1,20 @@
+import re
 from parser.models import ParsedEDI
 from validator.models import ValidationResult
+
+def mask_phi(text: str) -> str:
+    # Mask SSN patterns (9 digits with or without dashes)
+    text = re.sub(r'\b\d{3}-\d{2}-\d{4}\b', '[REDACTED_PHI]', text)
+    # Be careful not to redact valid non-PHI 9-digit numbers like some zip codes or standard codes, 
+    # but in a strict HIPAA environment we mask 9-digit sequences that could be SSNs
+    text = re.sub(r'\b\d{9}\b', '[REDACTED_PHI]', text)
+    # Mask typical Date of Birth patterns (e.g., YYYYMMDD if they look like a typical DOB)
+    # For safety, we mask any 8 digit string that starts with 19 or 20 as it could be a DOB (YYYYMMDD)
+    text = re.sub(r'\b(19|20)\d{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])\b', '[REDACTED_PHI]', text)
+    # Also mask MM/DD/YYYY or YYYY-MM-DD
+    text = re.sub(r'\b(19|20)\d{2}[-/.](0[1-9]|1[012])[-/.](0[1-9]|[12][0-9]|3[01])\b', '[REDACTED_PHI]', text)
+    text = re.sub(r'\b(0[1-9]|1[012])[-/.](0[1-9]|[12][0-9]|3[01])[-/.](19|20)\d{2}\b', '[REDACTED_PHI]', text)
+    return text
 
 def _build_metadata_section(parsed: ParsedEDI) -> str:
     lines = [
@@ -88,4 +103,5 @@ def parsed_edi_to_markdown(parsed: ParsedEDI, validation: ValidationResult) -> s
         _build_loop_structure_section(parsed),
         _build_key_segments_section(parsed),
     ]
-    return "\n\n---\n\n".join(sections)
+    raw_markdown = "\n\n---\n\n".join(sections)
+    return mask_phi(raw_markdown)
