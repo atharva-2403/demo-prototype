@@ -12,8 +12,8 @@
 - **Data Privacy & HIPAA Compliance:** Added strict regular expression masking in `context_builder.py` to scrub standard PHI patterns (e.g., SSNs and DOBs) before sending EDI context to LLMs.
 - **LLM Prompt Injection Defense:** Wrapped EDI markdown context within strict `"""` delimiters and added explicit system prompt instructions in `ai/chat.py` to prevent prompt injection attacks from malicious EDI payloads.
 - **Security & Integrity Audit:** Performed a comprehensive Application Security audit across 5 domains (Input Validation, Data Privacy/HIPAA, Network Security/CORS, Secrets Management, and Dependency Vulnerabilities). Documented findings and proposed patches in a new `Security_Action_Plan.md`.
-- **PDF Export & CORS Hardening:** Resolved PDF corruption issues by refactoring the frontend `ExportControls.tsx` to use native `fetch` with `response.blob()`. Hardened `main.py` CORS configuration to strictly include production origins and explicitly `expose_headers` (`Content-Disposition`, `Content-Length`, `X-Suggested-Filename`) required for cross-origin downloads. Updated `routes/export.py` to send `X-Suggested-Filename`.
-- **LLM Persona & Behavioral Update:** Rebranded the AI as the 'ClearClaim AI Medical Billing Consultant'. Updated the system prompt in `ai/chat.py` to strictly hide internal architecture (Negative Constraint: no mentions of "Markdown", "Document", "Section", or "Context"). Implemented intelligent fallbacks to answer general billing queries using healthcare knowledge instead of refusing input. Set Google Gemini as the default LLM provider.
+- **PDF Export & CORS Hardening (RESOLVED):** Resolved production 'net::ERR_FAILED' errors by refactoring the frontend `ExportControls.tsx` to use native `fetch` with `response.blob()` for binary integrity. Hardened `main.py` CORS configuration to strictly include production origins and explicitly **exposed** critical headers (`Content-Disposition`, `Content-Length`, `X-Suggested-Filename`) required for cross-origin PDF metadata reading.
+- **AI Persona Behavioral Correction:** Rebranded the AI as the 'ClearClaim AI Medical Billing Consultant'. Updated `ai/chat.py` with strict negative constraints (forbidding words like "Markdown", "Document", "Section", "Context"). Implemented expert fallbacks allowing the AI to answer general healthcare billing questions instead of requiring a file analysis.
 - **Mission Control UI (Now ClearClaim AI):** Implemented a high-fidelity 'ClearClaim AI' upload interface with a mode selector (Standard, Delta, Reconcile, Eligibility Check) and dynamic multi-dropzone components, featuring a unified `files` state array to cleanly handle multi-file uploads without overwriting.
 - **Pre-flight Validation:** Added a `/api/preflight` backend endpoint and integrated it into the UI to show 'File Detected' badges (EDI type and segment count) upon file drop.
 - **Frontend Logic & Routing:** Updated `client.ts` and `ValidatorPage.tsx` to route and render the appropriate components and API calls based on the selected mode. Added a 'Validation Spinner' for improved perceived performance.
@@ -32,8 +32,9 @@
 - [x] Batch Processing
 - [x] 835-to-837 Reconciliation
 - [x] Production Environment Injection
-- [x] CORS Allow-All Origins
-- [x] Deployment Config (Render/Vercel)
+- [x] CORS Hardening & Header Exposure
+- [x] AI Persona Behavioral Correction
+- [x] PDF Binary Integrity Fix
 
 ---
 
