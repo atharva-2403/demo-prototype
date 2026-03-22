@@ -10,4 +10,4 @@ google-generativeai
 python-multipart
 aiofiles
 httpx
-python-jose
+PyJWT>=2.8.0

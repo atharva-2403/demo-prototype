@@ -1,7 +1,10 @@
+import os
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from typing import List, Dict, Any
 from pydantic import BaseModel
 from parser.state_machine import parse_edi
+
+MAX_FILE_SIZE = 5 * 1024 * 1024  # 5MB
 
 router = APIRouter()
 
@@ -44,8 +47,14 @@ def extract_members(loops):
 @router.post("/delta", response_model=DeltaReport)
 async def generate_delta(old_file: UploadFile = File(...), new_file: UploadFile = File(...)):
     try:
-        old_text = (await old_file.read()).decode("utf-8", errors="replace")
-        new_text = (await new_file.read()).decode("utf-8", errors="replace")
+        content_old = await old_file.read()
+        content_new = await new_file.read()
+        
+        if len(content_old) > MAX_FILE_SIZE or len(content_new) > MAX_FILE_SIZE:
+            raise HTTPException(status_code=413, detail="File too large. Maximum size is 5MB.")
+
+        old_text = content_old.decode("utf-8", errors="replace")
+        new_text = content_new.decode("utf-8", errors="replace")
         
         old_parsed = parse_edi(old_text)
         new_parsed = parse_edi(new_text)
@@ -75,5 +84,7 @@ async def generate_delta(old_file: UploadFile = File(...), new_file: UploadFile 
             terminations=terminations,
             changes=changes
         )
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Delta error: {str(e)}")

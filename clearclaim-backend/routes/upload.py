@@ -1,6 +1,9 @@
+import os
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from parser.state_machine import parse_edi
 from parser.models import ParsedEDI
+
+MAX_FILE_SIZE = 5 * 1024 * 1024  # 5MB
 
 router = APIRouter()
 
@@ -8,6 +11,10 @@ router = APIRouter()
 async def preflight_check(file: UploadFile = File(...)):
     try:
         content = await file.read()
+        if len(content) > MAX_FILE_SIZE:
+            raise HTTPException(status_code=413, detail="File too large. Maximum size is 5MB.")
+            
+        safe_filename = os.path.basename(file.filename)
         text = content.decode("utf-8", errors="replace")
         segments = [s.strip() for s in text.replace('\n', '').replace('\r', '').split('~') if s.strip()]
         
@@ -19,10 +26,12 @@ async def preflight_check(file: UploadFile = File(...)):
                 break
                 
         return {
-            "file_name": file.filename,
+            "file_name": safe_filename,
             "segment_count": len(segments),
             "edi_type": edi_type
         }
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error in preflight check: {str(e)}")
 
@@ -30,9 +39,15 @@ async def preflight_check(file: UploadFile = File(...)):
 async def upload_file(file: UploadFile = File(...)):
     try:
         content = await file.read()
+        if len(content) > MAX_FILE_SIZE:
+            raise HTTPException(status_code=413, detail="File too large. Maximum size is 5MB.")
+            
+        safe_filename = os.path.basename(file.filename)
         text = content.decode("utf-8", errors="replace")
         parsed = parse_edi(text)
-        parsed.file_name = file.filename
+        parsed.file_name = safe_filename
         return parsed
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error parsing EDI file: {str(e)}")

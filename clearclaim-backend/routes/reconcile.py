@@ -1,9 +1,12 @@
+import os
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from typing import List, Dict, Any
 from pydantic import BaseModel
 import io
 
 from parser.state_machine import parse_edi
+
+MAX_FILE_SIZE = 5 * 1024 * 1024  # 5MB
 
 router = APIRouter()
 
@@ -21,10 +24,14 @@ async def reconcile_claims(
 ):
     try:
         content_837 = await file_837.read()
+        content_835 = await file_835.read()
+        
+        if len(content_837) > MAX_FILE_SIZE or len(content_835) > MAX_FILE_SIZE:
+            raise HTTPException(status_code=413, detail="File too large. Maximum size is 5MB.")
+
         text_837 = content_837.decode("utf-8", errors="replace")
         parsed_837 = parse_edi(text_837)
         
-        content_835 = await file_835.read()
         text_835 = content_835.decode("utf-8", errors="replace")
         parsed_835 = parse_edi(text_835)
 
@@ -143,5 +150,7 @@ async def reconcile_claims(
             details=details
         )
     
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error reconciling files: {str(e)}")

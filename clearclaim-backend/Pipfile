@@ -16,7 +16,7 @@ google-generativeai = "*"
 python-multipart = "*"
 aiofiles = "*"
 httpx = "*"
-python-jose = "*"
+pyjwt = "*"
 
 [dev-packages]
 pytest = "*"
