@@ -22,7 +22,8 @@
 12. **Data Privacy & HIPAA Compliance:** Added strict regular expression masking in `context_builder.py` to scrub standard PHI patterns (e.g., SSNs and DOBs) before sending EDI context to LLMs.
 13. **LLM Prompt Injection Defense:** Wrapped EDI markdown context within strict `"""` delimiters and added explicit system prompt instructions in `ai/chat.py` to prevent prompt injection attacks from malicious EDI payloads.
 14. **Security & Integrity Audit:** Performed a comprehensive Application Security audit across 5 domains (Input Validation, Data Privacy/HIPAA, Network Security/CORS, Secrets Management, and Dependency Vulnerabilities). Documented findings and proposed patches in a new `Security_Action_Plan.md`.
-15. **PDF Export Fix:** Updated the backend `/api/export/pdf` endpoint to return the generated PDF bytes with correct headers (`Content-Disposition`, `media_type="application/pdf"`). Refactored the frontend `ExportControls.tsx` to handle the `blob` response, explicitly setting the type and using a programmatic anchor tag flow for secure downloads.
+15. **PDF Export Fix (Binary Integrity):** Resolved PDF corruption issues by refactoring the frontend `ExportControls.tsx` to use native `fetch` with `response.blob()`. This ensures binary integrity by bypassing automatic JSON parsing. Implemented a native programmatic download flow with proper memory management (`revokeObjectURL`).
+16. **LLM Persona & Behavioral Update:** Rebranded the AI as the 'ClearClaim AI Medical Billing Consultant'. Updated the system prompt in `ai/chat.py` to strictly hide internal architecture (no mentions of "Markdown" or "Sections"). Implemented intelligent fallbacks to provide a warm introduction and answer general billing questions instead of refusing input when no file is present. Set Google Gemini as the default LLM provider.
 
 ### Current State
 The repository is synchronized with GitHub and ready for live deployment.

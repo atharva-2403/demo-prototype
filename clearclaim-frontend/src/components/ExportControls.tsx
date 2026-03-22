@@ -6,8 +6,20 @@ const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
 export default function ExportControls({ parsed, validation }: { parsed: ParsedEDI, validation: ValidationResult }) {
   const handleExportPDF = async () => {
     try {
-      const res = await axios.post(`${API_BASE}/export/pdf`, { parsed, validation }, { responseType: 'blob' });
-      const fileURL = window.URL.createObjectURL(new Blob([res.data], { type: 'application/pdf' }));
+      const response = await fetch(`${API_BASE}/export/pdf`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ parsed, validation })
+      });
+      
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const blob = await response.blob();
+      const fileURL = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = fileURL;
       link.setAttribute('download', `${parsed.file_name}_report.pdf`);
