@@ -33,6 +33,14 @@ export const uploadReconcile = async (claimFile: File, remittanceFile: File): Pr
   return res.data;
 };
 
+export const uploadEligibility = async (claimFile: File, enrollmentFile: File): Promise<any> => {
+  const formData = new FormData();
+  formData.append('claim_file', claimFile);
+  formData.append('enrollment_file', enrollmentFile);
+  const res = await axios.post(`${API_BASE}/eligibility`, formData);
+  return res.data;
+};
+
 export const validateEDI = async (parsed: ParsedEDI): Promise<ValidationResult> => {
   const res = await axios.post(`${API_BASE}/validate`, parsed);
   return res.data;

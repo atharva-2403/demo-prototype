@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { uploadFile, uploadDelta, uploadReconcile, preflightCheck, validateEDI } from '../api/client';
+import { uploadFile, uploadDelta, uploadReconcile, uploadEligibility, preflightCheck, validateEDI } from '../api/client';
 
-type Mode = 'standard' | 'delta' | 'reconcile';
+type Mode = 'standard' | 'delta' | 'reconcile' | 'eligibility';
 
 interface FileData {
   file: File;
@@ -117,6 +117,15 @@ export default function FileUpload({ onUploadSuccess }: any) {
             setLoading(false);
           }
         );
+      } else if (mode === 'eligibility' && file1 && file2) {
+        simulateProgress(
+          ['Reading 837 Claim...', 'Reading 834 Enrollment...', 'Cross-referencing Member IDs...', 'Checking Active Coverage...'],
+          async () => {
+            const result = await uploadEligibility(file1.file, file2.file);
+            onUploadSuccess(result, null, 'eligibility');
+            setLoading(false);
+          }
+        );
       }
     } catch (e) {
       alert("Error processing files. Please ensure the backend is running.");
@@ -134,11 +143,13 @@ export default function FileUpload({ onUploadSuccess }: any) {
   const getZone1Labels = () => {
     if (mode === 'delta') return { title: 'Upload Current 834', color: 'blue' };
     if (mode === 'reconcile') return { title: 'Upload 837 Claim', color: 'blue' };
+    if (mode === 'eligibility') return { title: 'Upload 837 Claim', color: 'blue' };
     return { title: 'Upload EDI File', color: 'blue' };
   };
 
   const getZone2Labels = () => {
     if (mode === 'delta') return { title: 'Upload Previous 834', color: 'green' };
+    if (mode === 'eligibility') return { title: 'Upload 834 Enrollment', color: 'green' };
     return { title: 'Upload 835 Remittance', color: 'green' };
   };
 
@@ -161,8 +172,8 @@ export default function FileUpload({ onUploadSuccess }: any) {
           <p className="text-slate-400 text-sm mt-1 font-medium">Select your operation mode and upload X12 EDI files</p>
         </div>
 
-        <div className="p-4 bg-slate-100 border-b border-slate-200 flex justify-center gap-4">
-          {(['standard', 'delta', 'reconcile'] as Mode[]).map((m) => (
+        <div className="p-4 bg-slate-100 border-b border-slate-200 flex flex-wrap justify-center gap-4">
+          {(['standard', 'delta', 'reconcile', 'eligibility'] as Mode[]).map((m) => (
             <button
               key={m}
               onClick={() => setMode(m)}
@@ -175,6 +186,7 @@ export default function FileUpload({ onUploadSuccess }: any) {
               {m === 'standard' && 'Standard Parse'}
               {m === 'delta' && '834 Delta Report'}
               {m === 'reconcile' && 'Reconciliation'}
+              {m === 'eligibility' && 'Eligibility Check'}
             </button>
           ))}
         </div>
@@ -227,7 +239,7 @@ export default function FileUpload({ onUploadSuccess }: any) {
               <>
                 <div className="flex-shrink-0 z-20 -mx-4 bg-white rounded-full p-2 shadow-sm border border-slate-200">
                   <div className="w-8 h-8 bg-slate-100 text-slate-500 rounded-full flex items-center justify-center">
-                    {mode === 'reconcile' ? (
+                    {(mode === 'reconcile' || mode === 'eligibility') ? (
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
                     ) : (
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"></path></svg>
@@ -283,7 +295,7 @@ export default function FileUpload({ onUploadSuccess }: any) {
                 onClick={processFiles}
                 className="bg-slate-900 hover:bg-slate-800 text-white px-10 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 w-full max-w-sm flex items-center justify-center gap-3 h-full"
               >
-                <span>{mode === 'standard' ? 'Parse EDI File' : 'Run Cross-Check'}</span>
+                <span>{mode === 'standard' ? 'Parse EDI File' : 'Start Analysis'}</span>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
               </button>
             )}
