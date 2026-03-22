@@ -7,32 +7,75 @@ NOTE: ONLY THE GEMINI API KEY EXISTS SO PLEASE TEST USING THE GEMINI MODEL ONLY.
 
 
 
-Project: ClearClaim EDI Validation Engine
+ClearClaim — Enterprise EDI Intelligence Platform
+ClearClaim is a "security-first" AI-driven analytics suite designed to deconstruct, validate, and reconcile complex healthcare X12 EDI transactions. Built for the 2026 Hackathon, it bridges the gap between cryptic legacy billing formats and actionable administrative insights using a hybrid state-machine and LLM approach.
 
-Architecture and Implementation
-ClearClaim is a decoupled web application designed for the high-fidelity parsing and validation of X12 EDI healthcare transaction sets (837, 835, and 834). The system architecture consists of a FastAPI backend and a React 18 frontend, utilizing asynchronous service discovery via build-time environment variables.
 
-Technical Features
+Key Features
+1. Unified Mission Control Dashboard
+Above-the-Fold Design: A consolidated UI that fits entirely within the primary viewport, eliminating scrolling and maximizing judge engagement.
 
-State-Machine Parser: A custom-built Python engine that recursively extracts data from nested EDI loops with 100% structural accuracy.
+Dynamic Dropzone Geometry: Intelligently reconfigures from a single-file parser to side-by-side relational staging zones based on the selected operation mode.
 
-Registry Validation: Real-time NPI verification against the NPPES database and automated ICD-10 formatting enforcement.
+Native Drag-and-Drop: Utilizes native HTML5 event handlers to prevent browsers from opening sensitive EDI files in new tabs.
 
-AI Analysis: Multi-LLM support (Gemini 2.5 and Claude 3.5) integrated through a specialized Markdown context-builder to eliminate hallucinations and provide intelligent claim rejection insights.
 
-Membership Reporting: An automated 834 Delta Engine identifies additions, terminations, and demographic changes between enrollment cycles.
 
-Production Access
+2. Relational EDI Engines
+834 Enrollment Delta: Automatically identifies member additions, terminations, and attribute changes between two enrollment cycles.
 
-Frontend: Hosted on Vercel
+835/837 Payment Reconciliation: Handshakes Professional Claims (837) with Remittance Advice (835) to instantly flag underpayments and denials.
 
-Backend: Hosted on Render at the /api root endpoint.
+Eligibility Cross-Check: Validates active coverage by matching 837 claim data against 834 enrollment records to prevent eligibility-based rejections.
 
-Directions for Use
-Launch: Access the production URL via the Netlify dashboard.
 
-Upload: Provide a standard .edi transaction file for analysis.
 
-Inspect: Navigate the hierarchical Segment Tree to examine specific transaction data.
+3. Interpretive AI Consultant
+Multi-LLM Orchestration: Dynamically routes processed EDI trees to Gemini 2.5 and Claude 3.5.
 
-Resolve: Consult the Error Dashboard for flagged compliance failures and use the AI panel for detailed resolution steps.
+Plain-English Explanations: Converts raw segment data into human-readable billing advice and "Next Step" instructions for administrative staff.
+
+Expert Persona: The AI functions as a specialized Medical Billing and EDI Consultant, focusing on business impact rather than repeating technical codes.
+
+Enterprise Security & Compliance
+ClearClaim treats simulated Protected Health Information (PHI) with production-level rigor:
+
+HIPAA-Compliant Masking: A regex-based sanitization layer in context_builder.py redacts SSNs and sensitive demographics before data reaches external AI APIs.
+
+Prompt Injection Defense: Implements strict triple-quote delimiters and system prompt boundaries to prevent malicious EDI payloads from hijacking the LLM.
+
+Hardened Infrastructure: Migrated to PyJWT to resolve CVE-2024-33663 and enforced strict CORS whitelisting for the production Vercel domain.
+
+Zero-Trust Network: API access is strictly limited to the production frontend URL via environment variables.
+
+
+
+Tech Stack
+Frontend: React 18, Tailwind CSS, Vite.
+
+
+Backend: FastAPI (Python 3.11+), deployed on Render.
+
+
+
+AI/ML: Google Gemini (Default), Anthropic Claude, Custom X12 State-Machine Parser.
+
+
+
+Deployment: Vercel (Frontend), Render (Backend), GitHub Actions.
+
+
+
+Project Structure
+
+
+├── clearclaim-backend/
+│   ├── ai/               # LLM Orchestration & Prompt Engineering
+│   ├── parsers/          # Custom X12 State-Machine Logic
+│   ├── main.py           # FastAPI Entry & Secure CORS Middleware
+│   └── context_builder.py # PHI Masking & Markdown Generation
+├── src/                  # React Frontend
+│   ├── components/       # Mission Control & Segment Tree UI
+│   ├── api/              # Secure Client with Env Injection
+│   └── App.tsx           # Global State & Mode Routing
+└── Security_Action_Plan.md # Audit findings and implemented patches
