@@ -168,7 +168,7 @@ export default function FileUpload({ onUploadSuccess }: any) {
       <div className="max-w-5xl w-full bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200 relative z-10">
         
         <div className="bg-slate-900 px-6 py-4 text-white text-center">
-          <h2 className="text-2xl font-extrabold tracking-tight">Mission Control</h2>
+          <h2 className="text-2xl font-extrabold tracking-tight">ClearClaim AI</h2>
           <p className="text-slate-400 text-sm mt-1 font-medium">Select your operation mode and upload X12 EDI files</p>
         </div>
 
