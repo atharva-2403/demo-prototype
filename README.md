@@ -7,7 +7,7 @@ NOTE: ONLY THE GEMINI API KEY EXISTS SO PLEASE TEST USING THE GEMINI MODEL ONLY.
 
 
 ClearClaim — Enterprise EDI Intelligence Platform
-ClearClaim is a "security-first" AI-driven analytics suite designed to deconstruct, validate, and reconcile complex healthcare X12 EDI transactions. Built for the 2026 Hackathon, it bridges the gap between cryptic legacy billing formats and actionable administrative insights using a hybrid state-machine and LLM approach.
+ClearClaim is a "security-first" AI-driven analytics suite designed to deconstruct, validate, and reconcile complex healthcare X12 EDI transactions. It bridges the gap between cryptic legacy billing formats and actionable administrative insights using a hybrid state-machine and LLM approach.
 
 
 Key Features
